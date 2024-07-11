@@ -38,6 +38,13 @@ public class Product {
         this.dateCreated = dateCreated;
     }
 
+    @PrePersist
+    public void prePersist() {
+        if (this.dateCreated == null) {
+            this.dateCreated = new Date();
+        }
+    }
+
     public Long getId() {
         return id;
     }
