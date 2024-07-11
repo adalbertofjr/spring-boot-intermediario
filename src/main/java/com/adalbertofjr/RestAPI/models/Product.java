@@ -1,20 +1,31 @@
 package com.adalbertofjr.RestAPI.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+
 
 import java.util.Date;
 
 @Entity
 @Table(name = "Product")
 public class Product {
+
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column
+    @NotEmpty(message = "Can not be empty")
+    @NotBlank(message = "Can not be blank")
     private String name;
+
     @Column
+    @NotNull(message = "Can not be empty")
+    @Min(value = 0)
+    @Max(value = 1000)
     private Integer qtd;
+
     @Column
     private Date dateCreated;
 
