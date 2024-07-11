@@ -3,6 +3,8 @@ package com.adalbertofjr.RestAPI.resources;
 import com.adalbertofjr.RestAPI.models.Product;
 import com.adalbertofjr.RestAPI.services.ProductService;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+
 @RestController
 @RequestMapping("/products")
 public class ProductResource {
@@ -26,6 +29,7 @@ public class ProductResource {
         this.productService = productService;
     }
 
+    @Operation(summary = "Find all products")
     @GetMapping
     @ResponseBody
     public ResponseEntity<?> findAll() {
@@ -33,6 +37,7 @@ public class ProductResource {
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
+    @Operation(summary = "Find a product by id")
     @GetMapping(value = "/{id}")
     @ResponseBody
     public ResponseEntity<?> find(@PathVariable(value = "id") Long id) {
@@ -40,6 +45,7 @@ public class ProductResource {
         return new ResponseEntity<Optional<Product>>(product, HttpStatus.OK);
     }
 
+    @Operation(summary = "Create a new product")
     @PostMapping
     @ResponseBody
     @ResponseStatus(code = HttpStatus.CREATED)
@@ -56,6 +62,7 @@ public class ProductResource {
                 .collect(Collectors.joining(",")));
     }
 
+    @Operation(summary = "Update the product with id")
     @PutMapping(value = "/{id}")
     @ResponseBody
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @Valid @RequestBody Product product, Errors errors) {
@@ -71,6 +78,7 @@ public class ProductResource {
                 .collect(Collectors.joining(",")));
     }
 
+    @Operation(summary = "Delete a product")
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable(value = "id") Long id) {
